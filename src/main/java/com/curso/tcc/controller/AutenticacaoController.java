@@ -9,8 +9,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 
 @RestController
@@ -34,6 +34,10 @@ public class AutenticacaoController {
         } catch (AuthenticationException e) {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    public static void main(String args[]){
+        System.out.println(new BCryptPasswordEncoder().encode("123456"));
     }
 
 }

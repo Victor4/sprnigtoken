@@ -22,22 +22,29 @@ public class OrdemServicoController {
 
     @PostMapping
     public ResponseEntity<OrdemServico> consultarOrdens(@RequestBody @Valid OrdemServicoForm form) {
-        if(form.getPedido() != null && !form.getPedido().equals("") ){
-            Optional<OrdemServico> ordemServico = ordemServicoRepository.findByCodOS(form.getPedido());
-            if(ordemServico.isPresent()) {
-                return ResponseEntity.ok(ordemServico.get());
-            }else{
-                return ResponseEntity.notFound().build();
-            }
-        }else if(form.getPlaca() != null && !form.getPlaca().equals("")){
-            Optional<OrdemServico> ordemServico = ordemServicoRepository.findByPlacaVeiculo(form.getPlaca());
-            if(ordemServico.isPresent()) {
-                return ResponseEntity.ok(ordemServico.get());
-            }else{
-                return ResponseEntity.notFound().build();
-            }
+        OrdemServico ordemServico = receberPedido(form);
+        if(ordemServico != null){
+            return ResponseEntity.ok(ordemServico);
         }else{
-           return ResponseEntity.notFound().build();
+            return ResponseEntity.notFound().build();
         }
+    }
+
+    private OrdemServico receberPedido(OrdemServicoForm form) {
+        Optional<OrdemServico> ordemServico;
+        if(form.getPedido() != null){
+            if(form.getPedido() != null && !form.getPedido().equals("")){
+                ordemServico = ordemServicoRepository.findByCodOS(form.getPedido());
+                if(ordemServico.isPresent()) {
+                    return ordemServico.get();
+                }
+            }else if(form.getPlaca() != null && !form.getPlaca().equals("")){
+                ordemServico = ordemServicoRepository.findByPlacaVeiculo(form.getPlaca());
+                if(ordemServico.isPresent()) {
+                    return ordemServico.get();
+                }
+            }
+        }
+        return null;
     }
 }
