@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -21,28 +23,28 @@ public class OrdemServicoController {
     private OrdemServicoRepository ordemServicoRepository;
 
     @PostMapping
-    public ResponseEntity<OrdemServico> consultarOrdens(@RequestBody @Valid OrdemServicoForm form) {
-        OrdemServico ordemServico = receberPedido(form);
-        if(ordemServico != null){
-            return ResponseEntity.ok(ordemServico);
+    public ResponseEntity<List<OrdemServico>> consultarOrdens(@RequestBody @Valid OrdemServicoForm form) {
+        List<OrdemServico> ordensServico = receberPedido(form);
+        if(ordensServico != null){
+            return ResponseEntity.ok(ordensServico);
         }else{
             return ResponseEntity.notFound().build();
         }
     }
 
-    private OrdemServico receberPedido(OrdemServicoForm form) {
+    private List<OrdemServico> receberPedido(OrdemServicoForm form) {
+        List<OrdemServico> ordens = new ArrayList<>();
         Optional<OrdemServico> ordemServico;
         if(form.getPedido() != null){
             if(form.getPedido() != null && !form.getPedido().equals("")){
                 ordemServico = ordemServicoRepository.findByCodOS(form.getPedido());
                 if(ordemServico.isPresent()) {
-                    return ordemServico.get();
+                    ordens.add(ordemServico.get());
+                    return ordens;
                 }
             }else if(form.getPlaca() != null && !form.getPlaca().equals("")){
-                ordemServico = ordemServicoRepository.findByPlacaVeiculo(form.getPlaca());
-                if(ordemServico.isPresent()) {
-                    return ordemServico.get();
-                }
+                ordens = ordemServicoRepository.findByPlacaVeiculo(form.getPlaca());
+                return ordens;
             }
         }
         return null;
