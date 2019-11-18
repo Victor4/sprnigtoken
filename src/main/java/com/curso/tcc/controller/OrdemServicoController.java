@@ -25,11 +25,7 @@ public class OrdemServicoController {
     @PostMapping
     public ResponseEntity<List<OrdemServico>> consultarOrdens(@RequestBody @Valid OrdemServicoForm form) {
         List<OrdemServico> ordensServico = receberPedido(form);
-        if(ordensServico != null){
-            return ResponseEntity.ok(ordensServico);
-        }else{
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(ordensServico);
     }
 
     private List<OrdemServico> receberPedido(OrdemServicoForm form) {
@@ -39,14 +35,23 @@ public class OrdemServicoController {
             if(form.getPedido() != null && !form.getPedido().equals("")){
                 ordemServico = ordemServicoRepository.findByCodOS(form.getPedido());
                 if(ordemServico.isPresent()) {
-                    ordens.add(ordemServico.get());
-                    return ordens;
+                    if (ordemServico.get().getEmailCliente().equals(form.getEmail())){
+                        ordens.add(ordemServico.get());
+                        return ordens;
+                    }
                 }
             }else if(form.getPlaca() != null && !form.getPlaca().equals("")){
-                ordens = ordemServicoRepository.findByPlacaVeiculo(form.getPlaca());
+                List<OrdemServico> ordensAux = ordemServicoRepository.findByPlacaVeiculo(form.getPlaca());
+                for (OrdemServico ordem: ordensAux) {
+                    if(ordem.getEmailCliente().equals(form.getEmail())){
+                        ordens.add(ordem);
+                    }
+                }
                 return ordens;
             }
         }
-        return null;
+        return ordens;
     }
+
+
 }

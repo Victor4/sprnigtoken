@@ -4,6 +4,7 @@ import com.curso.tcc.config.security.TokenService;
 import com.curso.tcc.controller.form.LoginForm;
 import com.curso.tcc.model.dto.TokenDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,7 +33,7 @@ public class AutenticacaoController {
             String token = tokenService.gerarToken(authentication);
             return ResponseEntity.ok(new TokenDto(token, "Bearer"));
         } catch (AuthenticationException e) {
-            return ResponseEntity.badRequest().build();
+            return new ResponseEntity<TokenDto>(new TokenDto("",""), HttpStatus.BAD_REQUEST);
         }
     }
 

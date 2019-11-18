@@ -38,11 +38,15 @@ public class LoginForm {
 	}
 
 	public Usuario converterToUsuario(){
-		return new Usuario(
-				this.nome,
-				this.email,
-				this.senha,
-				"0");
+		if(nome.isEmpty() || email.isEmpty() || senha.isEmpty()){
+			return null;
+		}else {
+			return new Usuario(
+					this.nome,
+					this.email,
+					this.senha,
+					"0");
+		}
 	}
 
 }
