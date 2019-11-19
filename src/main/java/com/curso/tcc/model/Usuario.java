@@ -18,6 +18,7 @@ public class Usuario implements UserDetails {
 	private String nome;
 	private String email;
 	private String senha;
+	private String codCliente;
 	private String ativo;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
@@ -25,10 +26,11 @@ public class Usuario implements UserDetails {
 
 	public Usuario(){}
 
-	public Usuario(String nome, String email, String senha, String ativo) {
+	public Usuario(String nome, String email, String senha, String codCliente, String ativo) {
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
+		this.codCliente = codCliente;
 		this.ativo = ativo;
 	}
 
@@ -87,6 +89,22 @@ public class Usuario implements UserDetails {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public String getCodCliente() {
+		return codCliente;
+	}
+
+	public void setCodCliente(String codCliente) {
+		this.codCliente = codCliente;
+	}
+
+	public String getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(String ativo) {
+		this.ativo = ativo;
 	}
 
 	@Override

@@ -26,7 +26,7 @@ public class OrdemServico {
     private String marcaVeiculo;
     private String modeloVeiculo;
     private String nomeCliente;
-    private String emailCliente;
+    private String codCliente;
 
     public OrdemServico() {
     }
@@ -175,11 +175,11 @@ public class OrdemServico {
         this.nomeCliente = nomeCliente;
     }
 
-    public String getEmailCliente() {
-        return emailCliente;
+    public void setCodCliente(String codCliente) {
+        this.codCliente = codCliente;
     }
 
-    public void setEmailCliente(String emailCliente) {
-        this.emailCliente = emailCliente;
+    public String getCodCliente() {
+        return codCliente;
     }
 }

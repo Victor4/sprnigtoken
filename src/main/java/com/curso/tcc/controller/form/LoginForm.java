@@ -45,6 +45,7 @@ public class LoginForm {
 					this.nome,
 					this.email,
 					this.senha,
+					"0",
 					"0");
 		}
 	}

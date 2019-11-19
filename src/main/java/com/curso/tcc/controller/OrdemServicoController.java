@@ -35,17 +35,17 @@ public class OrdemServicoController {
             if(form.getPedido() != null && !form.getPedido().equals("")){
                 ordemServico = ordemServicoRepository.findByCodOS(form.getPedido());
                 if(ordemServico.isPresent()) {
-                    if (ordemServico.get().getEmailCliente().equals(form.getEmail())){
+                    //if (ordemServico.get().getEmailCliente().equals(form.getEmail())){
                         ordens.add(ordemServico.get());
                         return ordens;
-                    }
+                    //}
                 }
             }else if(form.getPlaca() != null && !form.getPlaca().equals("")){
                 List<OrdemServico> ordensAux = ordemServicoRepository.findByPlacaVeiculo(form.getPlaca());
                 for (OrdemServico ordem: ordensAux) {
-                    if(ordem.getEmailCliente().equals(form.getEmail())){
+                    //if(ordem.getEmailCliente().equals(form.getEmail())){
                         ordens.add(ordem);
-                    }
+                    //}
                 }
                 return ordens;
             }
